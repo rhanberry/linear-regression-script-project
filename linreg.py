@@ -7,8 +7,10 @@ import pandas as pd
 import statsmodels.api as sm
 
 # load the longley dataset into a pandas data frame - first column (year) used as row labels
-df = pd.read_csv('https://github.com/rhanberry/linear-regression-script-project/blob/master/data_folder/cancer_tax_state.csv', index_col = 0)
-df.head()
+df = pd.read_table('https://github.com/rhanberry/linear-regression-script-project/blob/master/data_folder/cancer_tax_state1.csv')
+df.names = [Rate, TAX]
+
+#df.head()
 
 y = df.Rate  # response
 X = df.TAX  # predictor
