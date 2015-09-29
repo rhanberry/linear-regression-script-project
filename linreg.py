@@ -7,8 +7,8 @@ import pandas as pd
 import statsmodels.api as sm
 
 # Load cigarette tax and lung cancer rates into a data frame
-df = pd.read_table('https://github.com/rhanberry/linear-regression-script-project/blob/master/data_folder/cancer_tax_state1.csv', names=['Rate', 'TAX'])
-
+df = pd.read_table('https://github.com/rhanberry/linear-regression-script-project/blob/master/data_folder/cancer_tax_state2.csv', index_col=0)
+#names=['Rate', 'TAX']
 
 #df.head()
 
