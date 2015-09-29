@@ -6,16 +6,16 @@ import pandas as pd
 # load statsmodels as alias ``sm``
 import statsmodels.api as sm
 
-# load the longley dataset into a pandas data frame - first column (year) used as row labels
-df = pd.read_table('https://github.com/rhanberry/linear-regression-script-project/blob/master/data_folder/cancer_tax_state1.csv')
-df.names = [Rate, TAX]
+# Load cigarette tax and lung cancer rates into a data frame
+df = pd.read_table('https://github.com/rhanberry/linear-regression-script-project/blob/master/data_folder/cancer_tax_state1.csv', names=['Rate', 'TAX'])
+
 
 #df.head()
 
 y = df.Rate  # response
 X = df.TAX  # predictor
 X = sm.add_constant(X)  # Adds a constant term to the predictor
-X.head()
+#X.head()
 
 
 est = sm.OLS(y, X)
@@ -54,10 +54,10 @@ est.summary()
 
 
 # Fit the no-intercept model
-est_no_int = smf.ols(formula='Employed ~ GNP - 1', data=df).fit()
+est_no_int = smf.ols(formula='Rate ~ TAX - 1', data=df).fit()
 
-# We pick 100 hundred points equally spaced from the min to the max
-X_prime_1 = pd.DataFrame({'GNP': np.linspace(X.GNP.min(), X.GNP.max(), 100)})
+# We pick 50 points equally spaced from the min to the max
+X_prime_1 = pd.DataFrame({'TAX': np.linspace(X.TAX.min(), X.TAX.max(), 50)})
 X_prime_1 = sm.add_constant(X_prime_1)  # add constant as we did before
 
 y_hat_int = est.predict(X_prime_1)
@@ -66,7 +66,7 @@ y_hat_no_int = est_no_int.predict(X_prime_1)
 fig = plt.figure(figsize=(8,4))
 splt = plt.subplot(121)
 
-splt.scatter(X.GNP, y, alpha=0.3)  # Plot the raw data
+splt.scatter(X.TAX, y, alpha=0.3)  # Plot the raw data
 plt.ylim(30, 100)  # Set the y-axis to be the same
 plt.xlabel("Cigarette excise tax")
 plt.ylabel("Lung and bronchus cancer rate")
@@ -74,7 +74,7 @@ plt.title("With intercept")
 splt.plot(X_prime[:, 1], y_hat_int, 'r', alpha=0.9)  # Add the regression line, colored in red
 
 splt = plt.subplot(122)
-splt.scatter(X.GNP, y, alpha=0.3)  # Plot the raw data
+splt.scatter(X.TAX, y, alpha=0.3)  # Plot the raw data
 plt.xlabel("Cigarette excise tax")
 plt.ylabel("Lung and bronchus cancer rate")
 plt.title("Without intercept")
